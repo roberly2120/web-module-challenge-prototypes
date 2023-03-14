@@ -15,9 +15,48 @@
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
+ }
 
-}
+Person.prototype.eat = function (someFood) {
+if (this.stomach.length < 10) {
+  this.stomach.push(someFood);
+ }
+ else {
+  return
+ }
+ }
+
+ Person.prototype.poop = function () {
+  this.stomach = [];
+ }
+
+ Person.prototype.toString = function () {
+  return `${this.name}, ${this.age}`;
+ }
+
+const person1 = new Person('Ryan', 29);
+person1.eat('1');
+person1.eat('2');
+person1.eat('3');
+person1.eat('4');
+person1.eat('5');
+person1.eat('6');
+person1.eat('7');
+person1.eat('8');
+person1.eat('9');
+person1.eat('10');
+person1.eat('11');
+person1.eat('12');
+
+person1.poop();
+// console.log(person1.toString());
+// console.log(JSON.stringify(person1));
+
+
 
 
 /*
@@ -36,9 +75,42 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
+function Car(model, milesPerGallon) {
+  this.model = model;
+  this.tank = 0;
+  this.odometer = 0;
+  this.milesPerGallon = milesPerGallon;
+  
+}
+
+Car.prototype.fill = function(gallons) {
+  this.tank += gallons;
+}
+
+Car.prototype.drive = function(distance) {
+// for (let i = 0; i < distance; i++) {
+
+  if (distance < (this.tank * this.milesPerGallon)){
+    this.odometer += distance;
+    this.tank = (this.tank - (distance / this.milesPerGallon)).toFixed(2);
+  }
+  else if (distance > (this.tank * this.milesPerGallon)){
+   
+    this.odometer = this.odometer + this.tank * this.milesPerGallon;
+    // need to figure out how to reduce the tank to 0 without messing up the math below. Another variable? a loop?
+    return `I ran out of fuel at ${this.tank * this.milesPerGallon} miles!`;
+  }
 
 }
+
+// }
+
+
+const car1 = new Car('Ranger', 50);
+car1.fill(10);
+// console.log(car1.drive(499));
+console.log(car1);
+
 
 
 /*
@@ -49,18 +121,30 @@ function Car() {
         + Should return a string "Playing with x", x being the favorite toy.
 */
 
-function Baby() {
+function Baby(name, age, favoriteToy) {
+Person.call(this, name, age);
+this.favoriteToy = favoriteToy;
 
 }
+Baby.prototype = Object.create(Person.prototype);
 
+Baby.prototype.play = function() {
+  return `Playing with ${this.favoriteToy}`;
+}
+
+
+
+const baby1 = new Baby('Eric', 1, 'bubbles')
+console.log(baby1);
+console.log(baby1.play());
 
 /* 
   TASK 4
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. Window Binding
+  2. Implicit Binding
+  3. Explicit Binding
+  4. New Binding
 */
 
 ///////// END OF CHALLENGE /////////
